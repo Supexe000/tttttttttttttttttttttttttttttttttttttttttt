@@ -1,86 +1,351 @@
 :root {
-  --primary-color: #ff4d6d;
-  --secondary-color: #ff8fa3;
-  --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); /* Deep space theme */
-  --font-heading: 'Dancing Script', cursive;
-  --font-body: 'Nunito', sans-serif;
+    --primary: #ff4d6d;
+    --secondary: #ff8fa3;
+    --accent: #ffb3c1;
+    --gold: #ffd700;
+    --dark: #590d22;
+    --white: #fff0f3;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  margin: 0;
-  padding: 0;
-  font-family: var(--font-body);
-  background: #000; /* Fallback */
-  height: 100vh;
-  overflow: hidden;
-  color: #fff;
-  user-select: none;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #2b0c1e, #590d22, #800f2f);
+    color: var(--white);
+    overflow: hidden; /* Prevent scrolling, we control it */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-#canvas-container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+/* Music Button */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1001;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--accent);
+    color: var(--white);
+    padding: 10px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: 0.3s;
 }
 
-#ui-layer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 10;
-  pointer-events: none; /* Let clicks pass to canvas unless on interactive elements */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.music-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
 }
 
-.scene-ui {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 1s ease;
+/* Background Animations */
+.background-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.5;
 }
 
-.scene-ui.active {
-  opacity: 1;
-  pointer-events: auto;
+.bg-heart {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: var(--secondary);
+    transform: rotate(45deg);
+    animation: floatUp 10s infinite linear;
+    bottom: -20px;
 }
 
+.bg-heart::before, .bg-heart::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--secondary);
+}
+
+.bg-heart::before { top: -10px; left: 0; }
+.bg-heart::after { top: 0; left: -10px; }
+
+.bg-heart:nth-child(1) { left: 10%; animation-duration: 8s; opacity: 0.7; }
+.bg-heart:nth-child(2) { left: 30%; animation-duration: 12s; width: 10px; height: 10px; }
+.bg-heart:nth-child(2)::before, .bg-heart:nth-child(2)::after { width: 10px; height: 10px; top: -5px; left: -5px; }
+.bg-heart:nth-child(3) { left: 70%; animation-duration: 6s; opacity: 0.4; }
+.bg-heart:nth-child(4) { left: 50%; animation-duration: 14s; }
+.bg-heart:nth-child(5) { left: 90%; animation-duration: 9s; opacity: 0.6; }
+
+@keyframes floatUp {
+    0% { transform: translateY(0) rotate(45deg) scale(1); opacity: 0; }
+    30% { opacity: 0.8; }
+    100% { transform: translateY(-100vh) rotate(45deg) scale(1.2); opacity: 0; }
+}
+
+/* Sections */
+.section {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+    z-index: 10;
+}
+
+.section.active {
+    display: flex;
+    opacity: 1;
+}
+
+/* Typography */
 h1, h2 {
-    font-family: var(--font-heading);
+    font-family: 'Dancing Script', cursive;
+    margin-bottom: 20px;
     text-shadow: 0 0 10px rgba(255, 77, 109, 0.8);
 }
 
-button {
-    pointer-events: auto;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    color: #fff;
-    padding: 15px 30px;
+h1 { font-size: 3rem; }
+h2 { font-size: 2.5rem; }
+p { font-size: 1.2rem; margin-bottom: 30px; line-height: 1.6; }
+
+/* Buttons */
+button.start-btn, button.next-btn, button.final-btn {
+    background: linear-gradient(45deg, var(--primary), var(--gold));
+    border: none;
+    padding: 12px 30px;
     font-size: 1.2rem;
-    border-radius: 50px;
+    color: var(--white);
+    border-radius: 30px;
     cursor: pointer;
-    backdrop-filter: blur(5px);
-    transition: all 0.3s;
-    font-family: var(--font-body);
-    margin-top: 20px;
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
 }
 
 button:hover {
-    background: rgba(255, 77, 109, 0.3);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px var(--primary-color);
     transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+}
+
+/* Section 2: Rain */
+.rain-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.rain {
+    position: absolute;
+    width: 2px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.4);
+    top: -20px;
+    animation: rainDrop 1s linear infinite;
+}
+
+.rain:nth-child(1) { left: 10%; animation-duration: 0.8s; animation-delay: 0.1s; }
+.rain:nth-child(2) { left: 20%; animation-duration: 0.9s; animation-delay: 0.3s; }
+.rain:nth-child(3) { left: 30%; animation-duration: 0.7s; animation-delay: 0.5s; }
+.rain:nth-child(4) { left: 50%; animation-duration: 1.1s; animation-delay: 0.2s; }
+.rain:nth-child(5) { left: 60%; animation-duration: 0.9s; animation-delay: 0.4s; }
+.rain:nth-child(6) { left: 80%; animation-duration: 0.8s; animation-delay: 0.1s; }
+.rain:nth-child(7) { left: 90%; animation-duration: 1.0s; animation-delay: 0.3s; }
+.rain:nth-child(8) { left: 40%; animation-duration: 0.8s; animation-delay: 0.6s; }
+.rain:nth-child(9) { left: 70%; animation-duration: 1.2s; animation-delay: 0.2s; }
+.rain:nth-child(10) { left: 15%; animation-duration: 0.9s; animation-delay: 0.7s; }
+
+@keyframes rainDrop {
+    to { transform: translateY(100vh); }
+}
+
+.cloud-text {
+    color: #a0a0a0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.2rem;
+    animation: pulse 2s infinite;
+}
+
+.content.hidden {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 1s ease;
+}
+
+.content.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Section 3: Heart */
+.heart-container {
+    cursor: pointer;
+    margin-bottom: 30px;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    animation: heartBeat 1.5s infinite;
+}
+
+.heart {
+    font-size: 5rem;
+    color: var(--primary);
+    text-shadow: 0 0 20px var(--primary);
+    transition: transform 0.2s;
+}
+
+@keyframes heartBeat {
+    0% { transform: scale(1); }
+    15% { transform: scale(1.3); }
+    30% { transform: scale(1); }
+    45% { transform: scale(1.15); }
+    60% { transform: scale(1); }
+}
+
+.particle {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* Section 4: Carousel */
+.carousel {
+    position: relative;
+    width: 90%;
+    max-width: 500px;
+    height: 400px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    background: rgba(255,255,255,0.1);
+}
+
+.carousel-track {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.slide.active { opacity: 1; }
+
+.slide img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+    border-radius: 15px 15px 0 0;
+}
+
+.slide .caption {
+    height: 20%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.5);
+    margin: 0;
+    padding: 10px;
+    font-size: 1rem;
+}
+
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.3);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+    z-index: 5;
+}
+
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* Section 5: Final Card */
+.card-modal {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--accent);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(255, 77, 109, 0.4);
+    position: relative;
+    animation: popUp 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popUp {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.floating-hearts span {
+    position: absolute;
+    animation: floatParticle 3s linear infinite;
+    font-size: 1.5rem;
+    opacity: 0;
+}
+
+.floating-hearts span:nth-child(1) { top: -20px; left: 10%; animation-delay: 0s; }
+.floating-hearts span:nth-child(2) { top: -40px; left: 30%; animation-delay: 1.5s; font-size: 1rem; }
+.floating-hearts span:nth-child(3) { top: -10px; left: 60%; animation-delay: 0.5s; }
+.floating-hearts span:nth-child(4) { top: -30px; left: 80%; animation-delay: 2s; font-size: 1.2rem; }
+.floating-hearts span:nth-child(5) { top: -50px; left: 50%; animation-delay: 1s; }
+
+@keyframes floatParticle {
+    0% { transform: translateY(0); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-50px); opacity: 0; }
+}
+
+@media (max-width: 600px) {
+    h1 { font-size: 2.2rem; }
+    h2 { font-size: 1.8rem; }
+    .carousel { height: 350px; }
 }

@@ -1,16 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Mano's Love Journey ❤️</title>
-    <link rel="stylesheet" href="./style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="ui-layer"></div>
-    <div id="canvas-container"></div>
-    <script type="module" src="./main.js"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Mano ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Background Music -->
+    <button id="musicToggle" class="music-btn">🎵 Music Off</button>
+    <audio id="bgMusic" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Floating Background Elements -->
+    <div class="background-effects">
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+        <div class="bg-heart"></div>
+    </div>
+
+    <!-- Section 1: Welcome Screen -->
+    <section id="welcome" class="section active">
+        <div class="content">
+            <h1 class="typing-text" id="welcomeText"></h1>
+            <button class="start-btn" onclick="nextSection('apology')">Start 💌</button>
+        </div>
+    </section>
+
+    <!-- Section 2: Apology -->
+    <section id="apology" class="section">
+        <div class="rain-container" id="rainContainer" onclick="clearRain()">
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <div class="rain"></div>
+            <h2 class="cloud-text">Tap to clear the clouds... 🌧️</h2>
+        </div>
+        <div class="content hidden" id="apologyContent">
+            <h2>I’m truly sorry 😔</h2>
+            <p>My anger spoke faster than my heart.</p>
+            <p>You deserve love, not frustration 🥺</p>
+            <button class="next-btn" onclick="nextSection('loveHeart')">Forgive me? 💔</button>
+        </div>
+    </section>
+
+    <!-- Section 3: Love Heart -->
+    <section id="loveHeart" class="section">
+        <div class="heart-container" onclick="burstHeart()">
+            <div class="heart">❤️</div>
+            <div class="particles" id="heartParticles"></div>
+        </div>
+        <div class="content hidden" id="heartText">
+            <h2>You are my calm and my happiness 💕</h2>
+            <p>I want to be better for you.</p>
+            <button class="next-btn" onclick="nextSection('memories')">Go to Memories 📸</button>
+        </div>
+    </section>
+
+    <!-- Section 4: Memories -->
+    <section id="memories" class="section">
+        <div class="carousel">
+            <div class="carousel-track" id="track">
+                <div class="slide active">
+                    <img src="https://images.unsplash.com/photo-1518568814500-bf0f8d125f46?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Flowers">
+                    <p class="caption">Your smile makes my world brighter 🥺</p>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1474552226712-ac0f0961a954?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sunset">
+                    <p class="caption">Every moment with you is precious ✨</p>
+                </div>
+                <div class="slide">
+                    <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Stars">
+                    <p class="caption">I never want to hurt you 💔</p>
+                </div>
+            </div>
+            <button class="nav-btn prev" onclick="moveSlide(-1)">❮</button>
+            <button class="nav-btn next" onclick="moveSlide(1)">❯</button>
+        </div>
+        <button class="next-btn" onclick="nextSection('finalCard')">One Last Thing... 💌</button>
+    </section>
+
+    <!-- Section 5: Final Card -->
+    <section id="finalCard" class="section">
+        <div class="card-modal show">
+            <div class="floating-hearts">
+                <span>❤️</span><span>💖</span><span>💕</span><span>💗</span><span>💓</span>
+            </div>
+            <h2>Mano ❤️</h2>
+            <p>I’m deeply sorry and I love you.</p>
+            <p>Please forgive me 🥹💕</p>
+            <button class="final-btn" onclick="sendLove()">Send Love 💌</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
 </html>

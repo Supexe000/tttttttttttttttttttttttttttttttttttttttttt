@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mano Love Journey ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="https://www.bensound.com/bensound-music/bensound-cutedance.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <button id="music-toggle" class="music-btn">🎵 Music Off</button>
+
+    <!-- Scene 1: Welcome -->
+    <div id="scene1" class="scene active">
+        <div class="floating-hearts-bg"></div>
+        <div class="content">
+            <h1>Happy Valentine’s Day, Mano Jaan ❤️</h1>
+            <p>This is something special from my heart to yours.</p>
+            <button class="next-btn" onclick="nextScene(2)">Start the Journey 💌</button>
+        </div>
+    </div>
+
+    <!-- Scene 2: The Apology -->
+    <div id="scene2" class="scene">
+        <div class="rain-container" id="rain-container">
+            <!-- Rain added via JS -->
+        </div>
+        <div class="content apology-content hidden" id="apology-text">
+            <h2>Mano jaan, I’m truly sorry 😔</h2>
+            <p>My anger spoke faster than my heart.</p>
+            <p>You never deserve my frustration, babe 🥺</p>
+            <button class="next-btn" onclick="nextScene(3)">Forgive me? 💔</button>
+        </div>
+        <div class="cloud-overlay" id="cloud-overlay" onclick="clearClouds()">
+            <p class="instruction">Tap the clouds to clear the rain 🌧️</p>
+        </div>
+    </div>
+
+    <!-- Scene 3: Heart Scene -->
+    <div id="scene3" class="scene">
+        <div class="heart-container" onclick="beatHeart()">
+            <div class="heart">❤️</div>
+        </div>
+        <div class="content hidden" id="heart-message">
+            <h2>Cutie patootie 💕</h2>
+            <p>You are my calm, my happiness, my favorite person.</p>
+            <p>I want to be better for you.</p>
+            <button class="next-btn" onclick="nextScene(4)">Continue ✨</button>
+        </div>
+    </div>
+
+    <!-- Scene 4: Memory Lane -->
+    <div id="scene4" class="scene">
+        <div class="carousel-container">
+            <div class="carousel-slide active-slide">
+                <div class="memory-card">🌸</div>
+                <p>Your smile...</p>
+            </div>
+            <div class="carousel-slide">
+                <div class="memory-card">⭐</div>
+                <p>Your laugh...</p>
+            </div>
+            <div class="carousel-slide">
+                <div class="memory-card">🌅</div>
+                <p>Even your cute anger...</p>
+            </div>
+            <div class="carousel-controls">
+                <button onclick="prevSlide()">❮</button>
+                <button onclick="nextSlide()">❯</button>
+            </div>
+        </div>
+        <div class="content">
+            <p>...means the world to me 🥺</p>
+            <p>I never want to be the reason you’re sad.</p>
+            <button class="next-btn" onclick="nextScene(5)">My Promise 🤞</button>
+        </div>
+    </div>
+
+    <!-- Scene 5: Promise Page -->
+    <div id="scene5" class="scene">
+        <div class="notebook">
+            <h2>My Promises to You 📝</h2>
+            <div class="checklist">
+                <label class="checkbox-container">
+                    <input type="checkbox" onchange="checkPromise()">
+                    <span class="checkmark"></span> Stay calm
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" onchange="checkPromise()">
+                    <span class="checkmark"></span> Listen more
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" onchange="checkPromise()">
+                    <span class="checkmark"></span> Respect feelings
+                </label>
+            </div>
+        </div>
+        <div class="content hidden" id="promise-message">
+            <p>I don’t want to just say sorry — I want to show change 🫶</p>
+            <button class="next-btn" onclick="nextScene(6)">Open Love Letter 💌</button>
+        </div>
+    </div>
+
+    <!-- Scene 6: Love Card -->
+    <div id="scene6" class="scene">
+        <div class="envelope" onclick="openEnvelope()">
+            <div class="flap"></div>
+            <div class="body"></div>
+            <div class="letter" id="letter">
+                <h2>Mano Jaan ❤️</h2>
+                <p>I’m deeply sorry and I love you.</p>
+                <p>You are my choice, not just a habit.</p>
+                <p>Please forgive me, cutie pie 🥹💕</p>
+                <h3>Happy Valentine’s Day 🌹</h3>
+            </div>
+        </div>
+        <button class="next-btn hidden" id="final-btn" onclick="celebrate()">Send Love 💌</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+:root {
+  --primary-color: #ff4d6d;
+  --secondary-color: #ff8fa3;
+  --bg-gradient: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%); /* Deep space theme */
+  --font-heading: 'Dancing Script', cursive;
+  --font-body: 'Nunito', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  background: #000; /* Fallback */
+  height: 100vh;
+  overflow: hidden;
+  color: #fff;
+  user-select: none;
+}
+
+#canvas-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+#ui-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none; /* Let clicks pass to canvas unless on interactive elements */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.scene-ui {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 1s ease;
+}
+
+.scene-ui.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+h1, h2 {
+    font-family: var(--font-heading);
+    text-shadow: 0 0 10px rgba(255, 77, 109, 0.8);
+}
+
+button {
+    pointer-events: auto;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    backdrop-filter: blur(5px);
+    transition: all 0.3s;
+    font-family: var(--font-body);
+    margin-top: 20px;
+}
+
+button:hover {
+    background: rgba(255, 77, 109, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px var(--primary-color);
+    transform: scale(1.05);
+}
